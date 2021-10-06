@@ -1,7 +1,7 @@
 # DeployDAO Migrator
 
 [![Crates.io](https://img.shields.io/crates/v/migrator)](https://crates.io/crates/migrator)
-[![License](https://img.shields.io/crates/l/migrator)](https://github.com/DeployDAO/migrator/blob/master/LICENSE.txt)
+[![License](https://img.shields.io/crates/l/migrator)](https://github.com/DeployDAO/migrator/blob/master/LICENSE)
 [![Build Status](https://img.shields.io/github/workflow/status/DeployDAO/migrator/Rust/master)](https://github.com/DeployDAO/migrator/actions/workflows/rust.yml?query=branch%3Amaster)
 [![Contributors](https://img.shields.io/github/contributors/DeployDAO/migrator)](https://github.com/DeployDAO/migrator/graphs/contributors)
 
