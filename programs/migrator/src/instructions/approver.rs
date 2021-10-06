@@ -1,14 +1,12 @@
 //! Instructions callable by the approver.
 
 use crate::account_contexts::*;
-use crate::bpf_loader_upgradeable::UpgradeableLoaderAccount;
 use anchor_lang::prelude::*;
 use solana_program::bpf_loader_upgradeable;
 use solana_program::{
     loader_upgradeable_instruction::UpgradeableLoaderInstruction, system_program, sysvar,
 };
 use vipers::unwrap_int;
-use vipers::validate::Validate;
 
 /// Creates a new [Migrator].
 pub fn new_migrator(
@@ -17,28 +15,6 @@ pub fn new_migrator(
     name: String,
     description: String,
 ) -> ProgramResult {
-    let migrator_key = ctx.accounts.migrator.key();
-    let program = &ctx.accounts.program;
-    let program_data = &ctx.accounts.program_data;
-
-    if program_data.data_is_empty() {
-        // migrator for an undeployed program
-        (UndeployedProgram {
-            program: ctx.accounts.program.clone(),
-            program_data: ctx.accounts.program_data.clone(),
-        })
-        .validate_for_migrator(migrator_key)?;
-    } else {
-        // migrator for a live program
-        let program: Account<UpgradeableLoaderAccount> = Account::try_from(program)?;
-        let program_data: Account<UpgradeableLoaderAccount> = Account::try_from(program_data)?;
-        (LiveProgram {
-            program,
-            program_data,
-        })
-        .validate_for_migrator(migrator_key)?;
-    }
-
     let migrator = &mut ctx.accounts.migrator;
     migrator.program_id = ctx.accounts.program.key();
     migrator.bump = bump;
@@ -56,8 +32,6 @@ pub fn new_migrator(
 
 /// Deploys a program with a migration.
 pub fn deploy_program(ctx: Context<DeployProgram>) -> ProgramResult {
-    ctx.accounts.validate()?;
-
     let migrator = &ctx.accounts.approved_migration.migrator;
     let seeds = gen_migrator_signer_seeds!(migrator);
 
@@ -121,8 +95,6 @@ pub fn deploy_program(ctx: Context<DeployProgram>) -> ProgramResult {
 
 /// Upgrades a program.
 pub fn upgrade_program(ctx: Context<UpgradeProgram>) -> ProgramResult {
-    ctx.accounts.validate()?;
-
     let migrator = &ctx.accounts.approved_migration.migrator;
 
     // upgrade the program

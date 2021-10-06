@@ -12,6 +12,7 @@ pub mod state;
 
 use account_contexts::*;
 use anchor_lang::prelude::*;
+use vipers::validate::Validate;
 
 declare_id!("M1G1VdgdfvjMCdUhVtzaejnutPmLknEiraq2F59YGxr");
 
@@ -31,21 +32,25 @@ pub mod migrator {
         name: String,
         description: String,
     ) -> ProgramResult {
+        ctx.accounts.validate()?;
         instructions::approver::new_migrator(ctx, bump, name, description)
     }
 
     /// Deploys a program with a migration.
     pub fn deploy_program(ctx: Context<DeployProgram>) -> ProgramResult {
+        ctx.accounts.validate()?;
         instructions::approver::deploy_program(ctx)
     }
 
     /// Upgrades a program.
     pub fn upgrade_program(ctx: Context<UpgradeProgram>) -> ProgramResult {
+        ctx.accounts.validate()?;
         instructions::approver::upgrade_program(ctx)
     }
 
     /// Approves a [Migration].
     pub fn approve_migration(ctx: Context<ApproveMigration>, deadline: i64) -> ProgramResult {
+        ctx.accounts.validate()?;
         instructions::approver::approve_migration(ctx, deadline)
     }
 
@@ -60,11 +65,13 @@ pub mod migrator {
         title: String,
         description: String,
     ) -> ProgramResult {
+        ctx.accounts.validate()?;
         instructions::public::propose_migration(ctx, bump, title, description)
     }
 
     /// Reserves a new program ID to be administered by its migrator.
     pub fn reserve_program_id(ctx: Context<ReserveProgramID>) -> ProgramResult {
+        ctx.accounts.validate()?;
         instructions::public::reserve_program_id(ctx)
     }
 }

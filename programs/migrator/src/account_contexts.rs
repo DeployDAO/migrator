@@ -79,13 +79,8 @@ pub struct UpgradeProgram<'info> {
 pub struct ReserveProgramID<'info> {
     /// Account containing the program ID.
     pub program: Signer<'info>,
-
-    /// Address where the program data will be stored.
-    pub program_data: UncheckedAccount<'info>,
-
     /// Payer to create the distributor.
     pub payer: Signer<'info>,
-
     /// The [System] program.
     pub system_program: Program<'info, System>,
 }

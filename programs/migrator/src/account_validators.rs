@@ -1,11 +1,44 @@
 use anchor_lang::prelude::*;
-use solana_program::bpf_loader_upgradeable::{self, UpgradeableLoaderState};
+use solana_program::{
+    bpf_loader_upgradeable::{self, UpgradeableLoaderState},
+    system_program,
+};
 use vipers::{assert_keys, invariant, program_err, unwrap_opt, validate::Validate};
 
 use crate::{
+    account_contexts::{NewMigrator, ReserveProgramID},
+    bpf_loader_upgradeable::UpgradeableLoaderAccount,
     ApproveMigration, ApprovedMigration, DeployProgram, LiveProgram, ProposeMigration,
     UndeployedProgram, UpgradeProgram,
 };
+
+impl<'info> Validate<'info> for NewMigrator<'info> {
+    fn validate(&self) -> ProgramResult {
+        let migrator_key = self.migrator.key();
+        let program = &self.program;
+        let program_data = &self.program_data;
+
+        if program_data.data_is_empty() {
+            // migrator for an undeployed program
+            (UndeployedProgram {
+                program: self.program.clone(),
+                program_data: self.program_data.clone(),
+            })
+            .validate_for_migrator(migrator_key)?;
+        } else {
+            // migrator for a live program
+            let program: Account<UpgradeableLoaderAccount> = Account::try_from(program)?;
+            let program_data: Account<UpgradeableLoaderAccount> = Account::try_from(program_data)?;
+            (LiveProgram {
+                program,
+                program_data,
+            })
+            .validate_for_migrator(migrator_key)?;
+        }
+
+        Ok(())
+    }
+}
 
 impl<'info> Validate<'info> for DeployProgram<'info> {
     fn validate(&self) -> ProgramResult {
@@ -61,6 +94,17 @@ impl<'info> Validate<'info> for ProposeMigration<'info> {
         } else {
             return program_err!(BufferAuthorityMismatch);
         }
+        Ok(())
+    }
+}
+
+impl<'info> Validate<'info> for ReserveProgramID<'info> {
+    fn validate(&self) -> ProgramResult {
+        assert_keys!(
+            *self.program.to_account_info().owner,
+            system_program::ID,
+            "program must not be a program account"
+        );
         Ok(())
     }
 }
