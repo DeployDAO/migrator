@@ -6,7 +6,7 @@ use solana_program::{
 use vipers::{assert_keys, invariant, program_err, unwrap_opt, validate::Validate};
 
 use crate::{
-    account_contexts::{NewMigrator, ReserveProgramID},
+    account_contexts::{NewMigrator, RejectMigration, ReserveProgramID},
     bpf_loader_upgradeable::UpgradeableLoaderAccount,
     ApproveMigration, ApprovedMigration, DeployProgram, LiveProgram, ProposeMigration,
     UndeployedProgram, UpgradeProgram,
@@ -79,6 +79,22 @@ impl<'info> Validate<'info> for ApproveMigration<'info> {
             "migration.migrator"
         );
         assert_keys!(self.migrator.approver, self.approver, "migrator.approver");
+        require!(self.migration.executed_at == -1, MigrationAlreadyExecuted);
+
+        Ok(())
+    }
+}
+
+impl<'info> Validate<'info> for RejectMigration<'info> {
+    fn validate(&self) -> ProgramResult {
+        assert_keys!(
+            self.migration.migrator,
+            self.migration,
+            "migration.migrator"
+        );
+        assert_keys!(self.migrator.approver, self.approver, "migrator.approver");
+        require!(self.migration.executed_at == -1, MigrationAlreadyExecuted);
+
         Ok(())
     }
 }

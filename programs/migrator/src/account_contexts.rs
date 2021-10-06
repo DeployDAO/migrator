@@ -96,6 +96,16 @@ pub struct ApproveMigration<'info> {
 }
 
 #[derive(Accounts)]
+pub struct RejectMigration<'info> {
+    /// The migrator.
+    pub migrator: Account<'info, Migrator>,
+    /// The migration.
+    pub migration: Account<'info, Migration>,
+    /// [Migrator::approver].
+    pub approver: Signer<'info>,
+}
+
+#[derive(Accounts)]
 #[instruction(bump: u8, title: String, description: String)]
 pub struct ProposeMigration<'info> {
     /// The approved [Migration] and its [Migrator].

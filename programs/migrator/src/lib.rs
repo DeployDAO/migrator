@@ -53,6 +53,11 @@ pub mod migrator {
         ctx.accounts.validate()?;
         instructions::approver::approve_migration(ctx, deadline)
     }
+    /// Approves a [Migration].
+    pub fn reject_migration(ctx: Context<RejectMigration>) -> ProgramResult {
+        ctx.accounts.validate()?;
+        instructions::approver::reject_migration(ctx)
+    }
 
     //////////////////////////////////////////
     // Public instructions

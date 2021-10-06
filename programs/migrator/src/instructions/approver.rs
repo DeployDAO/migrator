@@ -129,9 +129,30 @@ pub fn approve_migration(ctx: Context<ApproveMigration>, deadline: i64) -> Progr
         deadline > Clock::get()?.unix_timestamp,
         ExpiryMustBeInFuture
     );
+
+    // un-reject if the migration was rejected.
+    let migration = &mut ctx.accounts.migration;
+    if migration.rejected_at != -1 {
+        migration.rejected_at = -1;
+    }
+
     let migrator = &mut ctx.accounts.migrator;
-    migrator.approver = ctx.accounts.approver.key();
     migrator.pending_migration = ctx.accounts.migration.key();
     migrator.approval_expires_at = deadline;
+    Ok(())
+}
+
+/// Rejects the current [Migration].
+pub fn reject_migration(ctx: Context<RejectMigration>) -> ProgramResult {
+    let migration = &mut ctx.accounts.migration;
+    migration.rejected_at = Clock::get()?.unix_timestamp;
+
+    // cancel migration if it's the pending one
+    let migrator = &mut ctx.accounts.migrator;
+    if migrator.pending_migration.key() == migration.key() {
+        migrator.pending_migration = Pubkey::default();
+        migrator.approval_expires_at = -1;
+    }
+
     Ok(())
 }
