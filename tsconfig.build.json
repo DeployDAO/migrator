@@ -3,10 +3,10 @@
   "compilerOptions": {
     "noEmit": false,
     "declaration": true,
-    "removeComments": false,
     "declarationMap": true,
     "sourceMap": true,
-    "outDir": "dist/"
+    "outDir": "dist/cjs/",
+    "importHelpers": true
   },
   "include": ["src/"]
 }

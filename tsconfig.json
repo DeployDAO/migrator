@@ -1,18 +1,19 @@
 {
   "compilerOptions": {
     "target": "ES2015",
-    "module": "commonjs",
+    "module": "CommonJS",
     "moduleResolution": "node",
+
     "strict": true,
-    "strictFunctionTypes": true,
     "noImplicitOverride": true,
-    "esModuleInterop": true,
     "noUncheckedIndexedAccess": true,
-    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+
+    "esModuleInterop": true,
+    "skipLibCheck": true,
     "resolveJsonModule": true,
     "noEmit": true,
-    "lib": ["ES2019"]
+    "lib": ["ES2015"]
   },
   "include": ["./src", "./tests", "scripts/"]
 }
