@@ -15,9 +15,9 @@
     "type": "git",
     "url": "git+https://github.com/deploydao/migrator.git"
   },
-  "author": "Saber Team <team@saber.so>",
-  "homepage": "https://saber.so",
-  "license": "GPL-3.0",
+  "author": "Deploy DAO <team@deploydao.com>",
+  "homepage": "https://deploydao.com",
+  "license": "Apache-2.0",
   "publishConfig": {
     "access": "public"
   },
@@ -65,7 +65,6 @@
     "idl:generate:nolint": "./scripts/idl.sh && RUN_ESLINT=none ./scripts/generate-idl-types.sh"
   },
   "dependencies": {
-    "js-sha3": "^0.8.0",
     "tiny-invariant": "^1.1.0",
     "tslib": "^2.3.1"
   },

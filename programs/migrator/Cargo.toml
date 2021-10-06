@@ -3,10 +3,10 @@ name = "migrator"
 version = "0.1.0"
 description = "A Solana program for deploying and upgrading programs."
 edition = "2018"
-homepage = "https://saber.so"
+homepage = "https://deploydao.com"
 repository = "https://github.com/DeployDAO/migrator"
 license = "Apache-2.0"
-keywords = ["solana", "deploy", "token"]
+keywords = ["solana", "deploy", "anchor"]
 
 [lib]
 crate-type = ["cdylib", "lib"]

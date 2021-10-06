@@ -39,7 +39,8 @@ jobs:
       - name: Setup Cachix
         uses: cachix/cachix-action@v10
         with:
-          name: saber
+          name: deploydao
+          extraPullNames: saber
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
       # Install Solana
