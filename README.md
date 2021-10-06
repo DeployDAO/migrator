@@ -5,6 +5,8 @@
 [![Build Status](https://img.shields.io/github/workflow/status/DeployDAO/migrator/Rust/master)](https://github.com/DeployDAO/migrator/actions/workflows/rust.yml?query=branch%3Amaster)
 [![Contributors](https://img.shields.io/github/contributors/DeployDAO/migrator)](https://github.com/DeployDAO/migrator/graphs/contributors)
 
+**WARNING: This code is a work in progress. Please do not use it as is.**
+
 A program for deploying and upgrading programs.
 
 ## About
