@@ -1,0 +1,29 @@
+[package]
+name = "migrator"
+version = "0.1.0"
+description = "A Solana program for deploying and upgrading programs."
+edition = "2018"
+homepage = "https://saber.so"
+repository = "https://github.com/DeployDAO/migrator"
+license = "Apache-2.0"
+keywords = ["solana", "deploy", "token"]
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "migrator"
+
+[features]
+no-entrypoint = []
+no-idl = []
+cpi = ["no-entrypoint"]
+default = []
+
+[dependencies]
+anchor-lang = "0.17.0"
+anchor-spl = "0.17.0"
+bincode = "1.3.3"
+solana-program = "1.7.11"
+spl-associated-token-account = { version = "1.0.3", features = [
+    "no-entrypoint"
+] }
+vipers = "1.2.1"
