@@ -58,19 +58,15 @@ jobs:
           echo "Generating keypair..."
           solana-keygen new -o "$HOME/.config/solana/id.json" --no-passphrase --silent
 
-      - name: Cache Node modules
+      - name: Yarn Cache
         uses: actions/cache@v2
-        id: cache-node-modules
         with:
-          path: |
-            ./.yarn
-            ./node_modules
-          key: ${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          path: ./.yarn/cache
+          key: ${{ runner.os }}-${{ hashFiles('./.yarn/**/*.js') }}
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
           node-version: "16"
-          registry-url: "https://npm.pkg.github.com"
       - run: yarn install
 
       - name: Build program
