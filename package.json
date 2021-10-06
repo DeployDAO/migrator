@@ -36,7 +36,6 @@
     "@types/bn.js": "^5.1.0",
     "@types/chai": "^4.2.22",
     "@types/eslint": "^7",
-    "@types/jest": "^27.0.2",
     "@types/mocha": "^9.0.0",
     "@types/node": "^16.10.3",
     "bn.js": "^5.2.0",
