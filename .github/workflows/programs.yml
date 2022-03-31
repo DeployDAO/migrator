@@ -45,7 +45,7 @@ jobs:
 
       # Install Solana
       - name: Cache Solana binaries
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.1
         with:
           path: ~/.cache/solana
           key: ${{ runner.os }}-${{ env.SOLANA_VERSION }}
@@ -59,7 +59,7 @@ jobs:
           solana-keygen new -o "$HOME/.config/solana/id.json" --no-passphrase --silent
 
       - name: Yarn Cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.1
         with:
           path: ./.yarn/cache
           key: ${{ runner.os }}-${{ hashFiles('./.yarn/**/*.js') }}
