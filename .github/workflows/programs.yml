@@ -64,7 +64,7 @@ jobs:
           path: ./.yarn/cache
           key: ${{ runner.os }}-${{ hashFiles('./.yarn/**/*.js') }}
       - name: Setup Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3.1.0
         with:
           node-version: "16"
       - run: yarn install
